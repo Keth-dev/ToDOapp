@@ -1,0 +1,32 @@
+name: Print Workflow Output
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  print-output:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set Variables
+        run: |
+          echo "PILOT_VERSION_JIRA_NUM=CDX-38461" >> $GITHUB_ENV
+          echo "RELEASE_BRANCH=release/4.74.0" >> $GITHUB_ENV
+          echo "JIRA_USER=kurhen" >> $GITHUB_ENV
+          echo "JIRA_PASSWORD=${{ secrets.JIRA_PASSWORD }}" >> $GITHUB_ENV  # Assuming you store password in GitHub Secrets
+          echo "PILOT_VERSION=pilot Version" >> $GITHUB_ENV
+
+      - name: Print Output
+        run: |
+          echo "---- Workflow Output ----"
+          echo "PILOT_VERSION_JIRA_NUM: $PILOT_VERSION_JIRA_NUM"
+          echo "RELEASE_BRANCH: $RELEASE_BRANCH"
+          echo "JIRA_USER: $JIRA_USER"
+          echo "JIRA_PASSWORD: $JIRA_PASSWORD"
+          echo "PILOT_VERSION: $PILOT_VERSION"
+          echo "-------------------------"
